@@ -1,0 +1,19 @@
+{package}
+
+import jakarta.persistence.*;
+import lombok.Data;
+
+import java.util.UUID;
+{imports}
+
+@Data
+@Entity
+@Table(name = "{entity}")
+public class {Entity} {
+
+    @Id
+    @GeneratedValue
+    private UUID id;
+
+{fields}
+}

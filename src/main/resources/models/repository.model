@@ -1,0 +1,9 @@
+{package}
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import {packagename}.entity.{Entity};
+
+import java.util.UUID;
+
+public interface {Entity}Repository extends JpaRepository<{Entity}, UUID> {
+}

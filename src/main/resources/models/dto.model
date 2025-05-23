@@ -1,0 +1,9 @@
+{package}
+
+import java.util.UUID;
+{imports}
+
+public record {Entity}DTO(
+    UUID id,
+{fields}
+) {}

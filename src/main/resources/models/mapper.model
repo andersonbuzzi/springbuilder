@@ -1,0 +1,18 @@
+{package}
+
+import {packagename}.dto.{Entity}DTO;
+import {packagename}.dto.New{Entity}DTO;
+import {packagename}.entity.{Entity};
+import org.mapstruct.*;
+{imports}
+
+@Mapper(componentModel = "spring"{usesmapper})
+public interface {Entity}Mapper {
+
+    {Entity}DTO toDTO({Entity} entity);
+
+    {Entity} toEntity(New{Entity}DTO dto);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateEntityFromDTO({Entity}DTO dto, @MappingTarget {Entity} entity);
+}

@@ -1,0 +1,54 @@
+{package}
+
+/*import {packagename}.annotation.PermissionRequired;*/
+import {packagename}.dto.{Entity}DTO;
+import {packagename}.dto.New{Entity}DTO;
+/*import {packagename}.enums.Permissao;*/
+import {packagename}.service.{Entity}Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/{entity}")
+public class {Entity}Controller {
+
+    private final {Entity}Service service;
+
+    public {Entity}Controller({Entity}Service service) {
+        this.service = service;
+    }
+
+    @GetMapping
+    public Page<{Entity}DTO> list(Pageable pageable) {
+        return service.list(pageable);
+    }
+
+    @GetMapping("/{id}")
+    public {Entity}DTO findById(UUID id) {
+        return service.findById(id);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    //@PermissionRequired(Permissao.GERENCIAR_CADASTROS_BASICOS)
+    public {Entity}DTO create(@RequestBody New{Entity}DTO dto) {
+        return service.create(dto);
+    }
+
+    @PutMapping("/{id}")
+    //@PermissionRequired(Permissao.GERENCIAR_CADASTROS_BASICOS)
+    public {Entity}DTO update(@PathVariable UUID id, @RequestBody {Entity}DTO dto) {
+        return service.update(id, dto);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    //@PermissionRequired(Permissao.GERENCIAR_CADASTROS_BASICOS)
+    public void delete(@PathVariable UUID id) {
+        service.delete(id);
+    }
+}

@@ -1,0 +1,53 @@
+{package}
+
+import {packagename}.dto.{Entity}DTO;
+import {packagename}.dto.New{Entity}DTO;
+import {packagename}.entity.{Entity};
+import {packagename}.mapper.{Entity}Mapper;
+import {packagename}.repository.{Entity}Repository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.*;
+
+@Service
+public class {Entity}Service {
+
+    private final {Entity}Repository repository;
+    private final {Entity}Mapper mapper;
+
+    public {Entity}Service({Entity}Repository repository, {Entity}Mapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
+
+    public Page<{Entity}DTO> list(Pageable pageable) {
+        return repository.findAll(pageable).map(mapper::toDTO);
+    }
+
+    public {Entity}DTO create(New{Entity}DTO dto) {
+        {Entity} entity = mapper.toEntity(dto);
+        entity.setId(UUID.randomUUID());
+        return mapper.toDTO(repository.save(entity));
+    }
+
+    public {Entity}DTO update(UUID id, {Entity}DTO dto) {
+        {Entity} entityName = repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found"));
+        mapper.updateEntityFromDTO(dto, entityName);
+        return mapper.toDTO(repository.save(entityName));
+    }
+
+    public void delete(UUID id) {
+        repository.deleteById(id);
+    }
+
+    public {Entity}DTO findById(UUID id) {
+        return repository.findById(id)
+                .map(mapper::toDTO)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found"));
+    }
+}
